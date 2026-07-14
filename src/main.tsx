@@ -6,10 +6,12 @@ import Landing from "./pages/Landing";
 import LoggedIn from "./pages/LoggedIn";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
+import { ScrollToTop } from "./components/scroll-to-top";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/dashboard" element={<LoggedIn />} />

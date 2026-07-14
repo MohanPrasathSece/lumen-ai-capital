@@ -7,6 +7,7 @@ import { submitLead } from "@/lib/crm";
 import { useNavigate } from "react-router-dom";
 import { COUNTRY_PHONE_PATTERNS } from "@/lib/countries";
 import { CountrySelector } from "./country-selector";
+import { apiSignup, apiSignin } from "@/lib/authApi";
 
 type Mode = "signin" | "signup";
 
@@ -154,16 +155,22 @@ export function AuthModal({
 /* ---------- Sign In Form (email only - auth only, no CRM) ---------- */
 function SigninForm({ onSuccess }: { onSuccess: () => void }) {
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
   const { register, handleSubmit, formState: { errors } } = useForm<SigninData>({
     resolver: zodResolver(signinSchema),
   });
 
-  const onSubmit = async (_data: SigninData) => {
+  const onSubmit = async (data: SigninData) => {
     setStatus("loading");
-    // Simulate auth check - replace with real Vercel/Blob auth
-    await new Promise((r) => setTimeout(r, 800));
-    setStatus("idle");
-    onSuccess();
+    setErrorMessage("");
+    try {
+      await apiSignin({ email: data.email });
+      setStatus("idle");
+      onSuccess();
+    } catch (err: any) {
+      setStatus("error");
+      setErrorMessage(err.message || "An error occurred during sign in.");
+    }
   };
 
   return (
@@ -183,6 +190,10 @@ function SigninForm({ onSuccess }: { onSuccess: () => void }) {
           <p className="mt-1.5 text-xs text-red-500">{errors.email.message}</p>
         )}
       </div>
+
+      {errorMessage && (
+        <p className="text-xs text-red-500">{errorMessage}</p>
+      )}
 
       <button
         type="submit"
@@ -218,25 +229,30 @@ function SignupForm({ onSuccess }: { onSuccess: () => void }) {
     setStatus("loading");
     setErrorMessage("");
 
-    const result = await submitLead({
-      name: data.name,
-      email: data.email,
-      phone: data.phone,
-      countryCode: data.countryCode,
-      leadType: "signup",
-    });
+    try {
+      // 1. Persist user in Vercel Blob
+      await apiSignup({
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        countryCode: data.countryCode,
+      });
 
-    if (result.success) {
+      // 2. Submit lead to CRM
+      await submitLead({
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        countryCode: data.countryCode,
+        leadType: "signup",
+      });
+
       submittedRef.current = key;
       setStatus("success");
       setTimeout(onSuccess, 1200);
-    } else {
+    } catch (err: any) {
       setStatus("error");
-      if (result.error === "ALREADY_EXISTS") {
-        setErrorMessage("You have already contacted us.");
-      } else {
-        setErrorMessage("Please verify that all fields are filled out correctly and try again.");
-      }
+      setErrorMessage(err.message || "Please verify that all fields are filled out correctly and try again.");
     }
   };
 

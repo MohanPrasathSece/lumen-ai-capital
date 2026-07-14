@@ -1,3 +1,4 @@
+import { put, list } from "@vercel/blob";
 import { COUNTRY_PHONE_PATTERNS } from "../../src/lib/countries";
 
 export default async function handler(req: any, res: any) {
@@ -15,8 +16,25 @@ export default async function handler(req: any, res: any) {
 
   try {
     const { name, email, phone: rawPhone, countryCode } = req.body;
-    
-    // Formatting logic matching the CRM API
+    if (!email) {
+      return res.status(400).json({ error: "Email is required" });
+    }
+
+    const cleanEmail = email.toLowerCase().trim();
+
+    // Check if user already exists
+    const prefix = `users/${cleanEmail}.json`;
+    const { blobs } = await list({
+      prefix,
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+      storeId: process.env.BLOB_STORE_ID
+    });
+
+    if (blobs.length > 0) {
+      return res.status(400).json({ error: "An account with this email already exists." });
+    }
+
+    // Format phone
     const selectedCountry = COUNTRY_PHONE_PATTERNS[countryCode];
     let phone = (rawPhone || "").replace(/[^0-9+]/g, '');
     
@@ -28,27 +46,40 @@ export default async function handler(req: any, res: any) {
       if (phone.startsWith(rawDial)) phone = phone.slice(rawDial.length);
       if (phone.startsWith('0')) phone = phone.slice(1);
       
-      phone = '+' + rawDial + phone; // standard format (+ country code + number)
+      phone = '+' + rawDial + phone;
     } else {
       phone = "+41000000000";
     }
 
-    const country = countryCode ? countryCode.toLowerCase() : "ch";
+    const userData = {
+      name,
+      email: cleanEmail,
+      phone,
+      countryCode,
+      createdAt: new Date().toISOString()
+    };
 
-    // Simulate signup logic...
-    // ...
+    // Save to vercel blob
+    await put(prefix, JSON.stringify(userData), {
+      access: "public",
+      contentType: "application/json",
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+      storeId: process.env.BLOB_STORE_ID
+    });
 
+    // Notify Dashboard
     try {
       const url = process.env.VITE_DASHBOARD_URL || "https://lead-dashboard-orcin.vercel.app/api/increment";
       await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ website: "Lumen", type: "singup", name, email })
+        body: JSON.stringify({ website: "Lumen", type: "singup", name, email: cleanEmail })
       }).catch(() => {});
     } catch(e){}
 
-    return res.status(200).json({ success: true, phone, country });
+    return res.status(200).json({ success: true, email: cleanEmail });
   } catch (err) {
+    console.error("Signup error:", err);
     return res.status(500).json({ error: "Internal server error" });
   }
 }
