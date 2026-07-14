@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowUpRight, ArrowRight, ShieldCheck, LineChart, Bell,
-  Brain, BarChart3, FileText,
+  Brain, BarChart3, FileText, AlertCircle,
 } from "lucide-react";
 import { HeroDashboard } from "@/components/hero-dashboard";
 import { MiniChart, Donut } from "@/components/charts";
@@ -50,6 +50,62 @@ function CustomCursor() {
   );
 }
 
+/* ------------------------- Session Countdown Hook ------------------------- */
+function useSessionCountdown(key: string, defaultMinutes = 15) {
+  const [timeLeft, setTimeLeft] = useState("");
+
+  useEffect(() => {
+    const getTargetTime = () => {
+      const stored = sessionStorage.getItem(key);
+      if (stored) {
+        const parsed = parseInt(stored, 10);
+        if (parsed > Date.now()) return parsed;
+      }
+      const newTarget = Date.now() + defaultMinutes * 60 * 1000;
+      sessionStorage.setItem(key, newTarget.toString());
+      return newTarget;
+    };
+
+    let targetTime = getTargetTime();
+
+    const updateTimer = () => {
+      const diff = targetTime - Date.now();
+      if (diff <= 0) {
+        const newTarget = Date.now() + defaultMinutes * 60 * 1000;
+        sessionStorage.setItem(key, newTarget.toString());
+        targetTime = newTarget;
+      }
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      setTimeLeft(`${minutes.toString().padStart(2, "0")}m ${seconds.toString().padStart(2, "0")}s`);
+    };
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+    return () => clearInterval(interval);
+  }, [key, defaultMinutes]);
+
+  return timeLeft;
+}
+
+/* ------------------------- Urgency Banner ------------------------- */
+function UrgencyBanner({ countdown }: { countdown: string }) {
+  return (
+    <div className="fixed inset-x-0 top-0 z-[60] bg-[var(--cobalt)] px-4 py-2.5 text-center text-xs font-medium text-white flex items-center justify-center gap-2 md:gap-3 shadow-md">
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-2.5 py-0.5 text-[9px] tracking-wider uppercase font-semibold text-white">
+        Limited Space
+      </span>
+      <span>
+        Beta cohort seats are <strong>93% filled</strong>. Only <strong>7 invitations</strong> remaining.
+      </span>
+      <span className="hidden sm:inline-block opacity-40">|</span>
+      <span>
+        Applications close in: <span className="font-mono text-white underline underline-offset-2 font-bold">{countdown}</span>
+      </span>
+    </div>
+  );
+}
+
 /* ------------------------- Nav ------------------------- */
 function Nav({ onAuth }: { onAuth: (m: AuthMode) => void }) {
   const [scrolled, setScrolled] = useState(false);
@@ -59,7 +115,7 @@ function Nav({ onAuth }: { onAuth: (m: AuthMode) => void }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled ? "py-3" : "py-5"}`}>
+    <header className={`fixed inset-x-0 top-9 z-50 transition-all duration-500 ${scrolled ? "py-3" : "py-5"}`}>
       <div className="mx-auto max-w-7xl px-6">
         <div className={`flex items-center justify-between rounded-full px-5 py-2.5 transition-all duration-500 ${scrolled ? "glass" : "bg-transparent"}`}>
           <a href="#" className="flex items-center gap-2">
@@ -69,13 +125,12 @@ function Nav({ onAuth }: { onAuth: (m: AuthMode) => void }) {
             <span className="font-display text-base font-semibold tracking-tight text-ink">Lumen</span>
           </a>
           <nav className="hidden items-center gap-8 md:flex">
-            {["Product", "Intelligence", "Pricing", "Research", "Contact"].map((l) => {
+            {["Platform", "Workflow", "Contact"].map((l) => {
               let href = "#";
               let onClick: (() => void) | undefined = undefined;
-              if (l === "Product") href = "#features";
-              else if (l === "Intelligence") href = "#intelligence";
+              if (l === "Platform") href = "#features";
+              else if (l === "Workflow") href = "#intelligence";
               else if (l === "Contact") href = "#contact";
-              else onClick = () => onAuth("signup");
               
               return (
                 <a key={l} href={href} onClick={onClick} className="group relative text-sm text-ink/80 hover:text-ink transition-colors">
@@ -88,7 +143,7 @@ function Nav({ onAuth }: { onAuth: (m: AuthMode) => void }) {
           <div className="flex items-center gap-2">
             <button onClick={() => onAuth("signin")} className="hidden md:inline-flex text-sm text-ink/80 hover:text-ink">Sign in</button>
             <button onClick={() => onAuth("signup")} className="magnetic-btn inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-sm font-medium text-white">
-              Get access <ArrowRight className="h-3.5 w-3.5" />
+              Apply for invitation <ArrowRight className="h-3.5 w-3.5" />
             </button>
           </div>
         </div>
@@ -114,7 +169,7 @@ function SplitLine({ words, delay = 0, wordClassName }: { words: string[]; delay
 }
 
 /* ------------------------- Hero ------------------------- */
-function Hero({ onAuth }: { onAuth: (m: AuthMode) => void }) {
+function Hero({ onAuth, countdown }: { onAuth: (m: AuthMode) => void; countdown: string }) {
   const ref = useReveal<HTMLDivElement>();
   const dashRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -131,19 +186,19 @@ function Hero({ onAuth }: { onAuth: (m: AuthMode) => void }) {
     el.addEventListener("mouseleave", onLeave);
     return () => { window.removeEventListener("mousemove", onMove); el.removeEventListener("mouseleave", onLeave); };
   }, []);
-  const line1 = ["Intelligent", "crypto"];
+  const line1 = ["Exclusive", "crypto"];
   const line2 = ["investing,", "engineered"];
-  const line3 = ["for", "the", "long", "view."];
+  const line3 = ["for", "the", "selected", "few."];
   return (
-    <section ref={ref} className="relative min-h-[100svh] overflow-hidden bg-aurora pt-28 pb-20 flex items-center">
+    <section ref={ref} className="relative min-h-[100svh] overflow-hidden bg-aurora pt-36 pb-20 flex items-center">
       <div className="absolute inset-0 bg-grid-faint opacity-60" />
       <div className="pointer-events-none absolute -top-32 -left-32 h-[420px] w-[420px] rounded-full bg-[color-mix(in_oklab,var(--cobalt)_22%,transparent)] blur-3xl anim-float-slow" />
       <div className="pointer-events-none absolute top-40 right-0 h-[360px] w-[360px] rounded-full bg-[color-mix(in_oklab,var(--sky-accent)_28%,transparent)] blur-3xl anim-float-tiny" />
       <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 px-6 lg:grid-cols-12">
         <div className="lg:col-span-7">
-          <div className="inline-flex items-center gap-2 rounded-full border hairline bg-white/60 px-3 py-1 text-xs text-ink/80 backdrop-blur reveal is-visible">
-            <span className="h-1.5 w-1.5 rounded-full bg-[var(--cobalt)] anim-pulse-dot" />
-            New · Lumen Research v3 is live
+          <div className="inline-flex items-center gap-2 rounded-full border border-red-200 bg-red-50/80 px-3 py-1 text-xs font-medium text-red-800 backdrop-blur reveal is-visible">
+            <span className="h-1.5 w-1.5 rounded-full bg-red-600 anim-pulse-dot" />
+            ⚠️ Limited Capacity: Only 7 beta memberships remaining this week
           </div>
           <h1 className="mt-6 font-display text-[clamp(2.2rem,5vw,4rem)] font-medium leading-[1.02] tracking-[-0.04em] text-ink text-balance">
             <SplitLine words={line1} delay={0.15} />
@@ -151,18 +206,18 @@ function Hero({ onAuth }: { onAuth: (m: AuthMode) => void }) {
             <SplitLine words={line3} delay={0.55} wordClassName={(i) => (i === 2 ? "font-serif-display italic text-[var(--cobalt)]" : "")} />
           </h1>
           <p className="mt-7 max-w-xl text-base leading-relaxed text-subtle reveal" style={{ transitionDelay: "0.7s" }}>
-            Lumen pairs institutional-grade research with AI-driven portfolio intelligence - so your capital compounds with the calm of a thesis, not the noise of the feed.
+            Lumen pairs institutional-grade research with AI-driven portfolio intelligence. Access is strictly limited to qualified applicants. Current registration window closes in <span className="font-mono font-bold text-ink">{countdown}</span>.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-3 reveal" style={{ transitionDelay: "0.85s" }}>
-            <button onClick={() => onAuth("signup")} className="magnetic-btn group inline-flex items-center gap-2 rounded-full bg-[var(--cobalt)] px-6 py-3.5 text-sm font-medium text-white">
-              Open an account <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            <button onClick={() => onAuth("signup")} className="magnetic-btn group inline-flex items-center gap-2 rounded-full bg-[var(--cobalt)] px-6 py-3.5 text-sm font-medium text-white shadow-lg">
+              Apply for invitation <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </button>
             <a href="#features" className="magnetic-btn inline-flex items-center gap-2 rounded-full border hairline bg-white px-6 py-3.5 text-sm font-medium text-ink hover:bg-[var(--ice)]">
-              Explore the platform
+              Explore features
             </a>
           </div>
           <div className="mt-12 grid max-w-lg grid-cols-3 gap-6 reveal" style={{ transitionDelay: "1s" }}>
-            {[{ v: "SOC 2", l: "Type II Certified" }, { v: "$1.4B", l: "Assets Tracked" }, { v: "24/7", l: "AI Monitoring" }].map((s) => (
+            {[{ v: "SOC 2", l: "Type II Certified" }, { v: "$1.4B", l: "Assets Tracked" }, { v: "Invite-Only", l: "Beta Members" }].map((s) => (
               <div key={s.l}>
                 <div className="font-display text-2xl font-medium text-ink">{s.v}</div>
                 <div className="mt-0.5 text-xs text-subtle">{s.l}</div>
@@ -415,12 +470,15 @@ function Footer() {
 export default function Landing() {
   const [auth, setAuth] = useState<{ open: boolean; mode: AuthMode }>({ open: false, mode: "signin" });
   const openAuth = (mode: AuthMode) => setAuth({ open: true, mode });
+  const countdown = useSessionCountdown("lumen_beta_timer", 15);
+
   return (
-    <div className="relative bg-white text-ink antialiased">
+    <div className="relative bg-white text-ink antialiased pt-9">
       <CustomCursor />
+      <UrgencyBanner countdown={countdown} />
       <Nav onAuth={openAuth} />
       <main>
-        <Hero onAuth={openAuth} />
+        <Hero onAuth={openAuth} countdown={countdown} />
         <LogoTicker />
         <Features />
         <StackedCards />

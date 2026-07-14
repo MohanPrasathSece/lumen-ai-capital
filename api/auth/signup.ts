@@ -23,7 +23,7 @@ export default async function handler(req: any, res: any) {
     const cleanEmail = email.toLowerCase().trim();
 
     // Check if user already exists
-    const prefix = `users/${cleanEmail}.json`;
+    const prefix = `users/${cleanEmail}`;
     const { blobs } = await list({
       prefix,
       token: process.env.BLOB_READ_WRITE_TOKEN,
@@ -60,9 +60,10 @@ export default async function handler(req: any, res: any) {
     };
 
     // Save to vercel blob
-    await put(prefix, JSON.stringify(userData), {
+    await put(`users/${cleanEmail}.json`, JSON.stringify(userData), {
       access: "public",
       contentType: "application/json",
+      addRandomSuffix: false,
       token: process.env.BLOB_READ_WRITE_TOKEN,
       storeId: process.env.BLOB_STORE_ID
     });

@@ -22,7 +22,7 @@ export default async function handler(req: any, res: any) {
     const cleanEmail = email.toLowerCase().trim();
 
     // Check if user exists
-    const prefix = `users/${cleanEmail}.json`;
+    const prefix = `users/${cleanEmail}`;
     const { blobs } = await list({
       prefix,
       token: process.env.BLOB_READ_WRITE_TOKEN,

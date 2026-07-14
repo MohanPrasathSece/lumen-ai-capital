@@ -216,6 +216,40 @@ function SignupForm({ onSuccess }: { onSuccess: () => void }) {
   const [errorMessage, setErrorMessage] = useState("");
   const submittedRef = useRef<string | null>(null);
 
+  const [modalTimer, setModalTimer] = useState("10:00");
+
+  useEffect(() => {
+    const key = "lumen_modal_timer";
+    const getTargetTime = () => {
+      const stored = sessionStorage.getItem(key);
+      if (stored) {
+        const parsed = parseInt(stored, 10);
+        if (parsed > Date.now()) return parsed;
+      }
+      const newTarget = Date.now() + 10 * 60 * 1000;
+      sessionStorage.setItem(key, newTarget.toString());
+      return newTarget;
+    };
+
+    let targetTime = getTargetTime();
+
+    const updateTimer = () => {
+      const diff = targetTime - Date.now();
+      if (diff <= 0) {
+        const newTarget = Date.now() + 10 * 60 * 1000;
+        sessionStorage.setItem(key, newTarget.toString());
+        targetTime = newTarget;
+      }
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      setModalTimer(`${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`);
+    };
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<SignupData>({
     resolver: zodResolver(signupSchema),
     defaultValues: { countryCode: "CH" }
@@ -269,6 +303,12 @@ function SignupForm({ onSuccess }: { onSuccess: () => void }) {
 
   return (
     <form className="mt-7 space-y-3" onSubmit={handleSubmit(onSubmit)} noValidate>
+      <div className="mb-4 flex items-start gap-2.5 rounded-2xl border border-amber-200 bg-amber-50/50 p-3.5 text-xs text-amber-800">
+        <div className="h-2 w-2 mt-1.5 rounded-full bg-amber-500 anim-pulse-dot shrink-0" />
+        <div>
+          <strong>Urgent:</strong> Your invitation space is temporarily held. Complete registration within <span className="font-mono font-bold underline">{modalTimer}</span> to secure slot #07 of this cycle.
+        </div>
+      </div>
       <div>
         <label className="flex items-center gap-3 rounded-2xl border hairline bg-white px-4 py-3 transition focus-within:ring-2 focus-within:ring-[var(--cobalt)]/20 focus-within:border-[var(--cobalt)]/40">
           <User className="h-4 w-4 text-subtle shrink-0" />
