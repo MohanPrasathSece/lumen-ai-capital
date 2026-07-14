@@ -1,0 +1,21 @@
+export const COUNTRY_PHONE_PATTERNS: Record<string, { dial: string; pattern: RegExp; example: string; flag: string }> = {
+  CH: { dial: "+41", pattern: /^(\+41|0041|0)?[1-9]\d{8}$/, example: "079 123 45 67", flag: "🇨🇭" },
+  FR: { dial: "+33", pattern: /^(\+33|0033|0)?[1-9]\d{8}$/, example: "06 12 34 56 78", flag: "🇫🇷" },
+  BE: { dial: "+32", pattern: /^(\+32|0032|0)?[4]\d{8}$/, example: "0470 12 34 56", flag: "🇧🇪" },
+  US: { dial: "+1", pattern: /^(\+1|001)?\d{10}$/, example: "212 123 4567", flag: "🇺🇸" },
+  GB: { dial: "+44", pattern: /^(\+44|0044|0)?7\d{9}$/, example: "07700 900077", flag: "🇬🇧" },
+  DE: { dial: "+49", pattern: /^(\+49|0049|0)?[1-9]\d{9,10}$/, example: "0151 12345678", flag: "🇩🇪" },
+  ES: { dial: "+34", pattern: /^(\+34|0034)?[67]\d{8}$/, example: "612 345 678", flag: "🇪🇸" },
+  IT: { dial: "+39", pattern: /^(\+39|0039)?3\d{8,9}$/, example: "312 345 6789", flag: "🇮🇹" },
+  NL: { dial: "+31", pattern: /^(\+31|0031|0)?6\d{8}$/, example: "06 12345678", flag: "🇳🇱" },
+  SE: { dial: "+46", pattern: /^(\+46|0046|0)?7\d{8}$/, example: "070 123 45 67", flag: "🇸🇪" },
+  AU: { dial: "+61", pattern: /^(\+61|0061|0)?4\d{8}$/, example: "0412 345 678", flag: "🇦🇺" },
+  IN: { dial: "+91", pattern: /^(\+91|0091)?[6-9]\d{9}$/, example: "91234 56789", flag: "🇮🇳" },
+  AE: { dial: "+971", pattern: /^(\+971|00971|0)?5\d{8}$/, example: "050 123 4567", flag: "🇦🇪" },
+  SG: { dial: "+65", pattern: /^(\+65|0065)?[89]\d{7}$/, example: "8123 4567", flag: "🇸🇬" },
+  ZA: { dial: "+27", pattern: /^(\+27|0027|0)?[6-8]\d{8}$/, example: "071 234 5678", flag: "🇿🇦" },
+  BR: { dial: "+55", pattern: /^(\+55|0055)?[1-9]{2}9\d{8}$/, example: "11 91234-5678", flag: "🇧🇷" },
+  MX: { dial: "+52", pattern: /^(\+52|0052)?[1-9]\d{9}$/, example: "55 1234 5678", flag: "🇲🇽" },
+  JP: { dial: "+81", pattern: /^(\+81|0081|0)?[7-9]0\d{8}$/, example: "090 1234 5678", flag: "🇯🇵" },
+  CY: { dial: "+357", pattern: /^(\+357|00357)?9[0-9]{7}$/, example: "99 123456", flag: "🇨🇾" }
+};

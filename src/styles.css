@@ -1,0 +1,215 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 20px);
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Inter", ui-serif, Georgia, serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ice: var(--ice);
+  --color-cobalt: var(--cobalt);
+  --color-sky-accent: var(--sky-accent);
+  --color-hover-accent: var(--hover-accent);
+  --color-ink: var(--ink);
+  --color-subtle: var(--subtle);
+  --color-hairline: var(--hairline);
+
+  --shadow-floating: 0 30px 80px -30px color-mix(in oklab, var(--cobalt) 22%, transparent),
+                     0 8px 24px -10px color-mix(in oklab, #0a1a3f 12%, transparent);
+  --shadow-soft: 0 1px 2px rgb(17 17 17 / 0.04), 0 8px 24px -12px rgb(17 17 17 / 0.08);
+  --shadow-lift: 0 24px 60px -20px rgb(30 94 255 / 0.25);
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* Custom brand palette */
+  --background: oklch(1 0 0);            /* #FFFFFF */
+  --foreground: oklch(0.16 0 0);         /* #111111 */
+  --ice: oklch(0.975 0.005 240);         /* #F7F9FC */
+  --cobalt: oklch(0.58 0.22 263);        /* #1E5EFF */
+  --sky-accent: oklch(0.74 0.14 245);    /* #5AA9FF */
+  --hover-accent: oklch(0.94 0.04 250);  /* #DCEBFF */
+  --ink: oklch(0.16 0 0);
+  --subtle: oklch(0.5 0 0);              /* #666666 */
+  --hairline: oklch(0.92 0.003 240);     /* #EAEAEA */
+
+  --card: oklch(1 0 0);
+  --card-foreground: var(--ink);
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--ink);
+  --primary: var(--cobalt);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: var(--ice);
+  --secondary-foreground: var(--ink);
+  --muted: var(--ice);
+  --muted-foreground: var(--subtle);
+  --accent: var(--hover-accent);
+  --accent-foreground: var(--cobalt);
+  --destructive: oklch(0.6 0.22 27);
+  --destructive-foreground: oklch(1 0 0);
+  --border: var(--hairline);
+  --input: var(--hairline);
+  --ring: var(--cobalt);
+}
+
+.dark {
+  --background: oklch(0.16 0 0);
+  --foreground: oklch(1 0 0);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    letter-spacing: -0.011em;
+  }
+  ::selection { background: var(--cobalt); color: white; }
+}
+
+@layer utilities {
+  .font-display { font-family: var(--font-display); letter-spacing: -0.035em; }
+  .font-serif-display { font-family: var(--font-serif); letter-spacing: -0.02em; }
+
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  /* Soft moving gradient backdrop */
+  .bg-aurora {
+    background:
+      radial-gradient(60% 50% at 12% 10%, color-mix(in oklab, var(--cobalt) 14%, transparent) 0%, transparent 60%),
+      radial-gradient(50% 40% at 90% 20%, color-mix(in oklab, var(--sky-accent) 18%, transparent) 0%, transparent 65%),
+      radial-gradient(70% 60% at 70% 90%, color-mix(in oklab, var(--cobalt) 8%, transparent) 0%, transparent 70%),
+      var(--background);
+  }
+
+  .bg-grid-faint {
+    background-image:
+      linear-gradient(to right, color-mix(in oklab, var(--ink) 4%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, var(--ink) 4%, transparent) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  .glass {
+    background: color-mix(in oklab, white 70%, transparent);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border: 1px solid color-mix(in oklab, var(--ink) 6%, transparent);
+  }
+
+  .ring-hairline { box-shadow: inset 0 0 0 1px var(--hairline); }
+
+  .magnetic-btn {
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+                box-shadow 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+                background-color 0.3s ease;
+  }
+  .magnetic-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-lift); }
+
+  .hairline { border-color: var(--hairline); }
+
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-10px) translateX(4px); }
+  }
+  @keyframes float-tiny {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(6px); }
+  }
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); opacity: 0.95; }
+    50% { transform: scale(1.015); opacity: 1; }
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+  @keyframes draw-line {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+  @keyframes shimmer-bg {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .anim-float-slow { animation: float-slow 7s ease-in-out infinite; }
+  .anim-float-tiny { animation: float-tiny 5s ease-in-out infinite; }
+  .anim-breathe { animation: breathe 4s ease-in-out infinite; }
+  .anim-pulse-dot { animation: pulse-dot 1.8s ease-in-out infinite; }
+  .anim-draw-line { animation: draw-line 1.4s 0.3s cubic-bezier(0.7, 0, 0.3, 1) both; transform-origin: left; }
+  .anim-ticker { animation: ticker 40s linear infinite; }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.9s cubic-bezier(0.2,0.8,0.2,1), transform 0.9s cubic-bezier(0.2,0.8,0.2,1); }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+  .image-reveal { opacity: 0; transform: scale(1.04); filter: blur(8px); transition: opacity 1s ease, transform 1.2s cubic-bezier(0.2,0.8,0.2,1), filter 1s ease; }
+  .image-reveal.is-visible { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+
+select.custom-select {
+  appearance: none !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-right: 1px solid var(--hairline) !important;
+  border-radius: 0px !important;
+  color: var(--ink) !important;
+  padding: 0 2.2rem 0 0.8rem !important;
+  font-family: inherit;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.6rem center !important;
+  background-size: 1rem auto !important;
+  transition: all 0.2s ease;
+}
+
+select.custom-select:focus {
+  outline: none !important;
+  border-color: transparent !important;
+  border-right-color: #f59e0b !important;
+  box-shadow: none !important;
+}
+
+select.custom-select option {
+  background-color: #ffffff;
+  color: var(--ink);
+}
