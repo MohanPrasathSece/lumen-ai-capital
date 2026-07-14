@@ -151,7 +151,7 @@ function Hero({ onAuth }: { onAuth: (m: AuthMode) => void }) {
             <SplitLine words={line3} delay={0.55} wordClassName={(i) => (i === 2 ? "font-serif-display italic text-[var(--cobalt)]" : "")} />
           </h1>
           <p className="mt-7 max-w-xl text-base leading-relaxed text-subtle reveal" style={{ transitionDelay: "0.7s" }}>
-            Lumen pairs institutional-grade research with AI-driven portfolio intelligence — so your capital compounds with the calm of a thesis, not the noise of the feed.
+            Lumen pairs institutional-grade research with AI-driven portfolio intelligence - so your capital compounds with the calm of a thesis, not the noise of the feed.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-3 reveal" style={{ transitionDelay: "0.85s" }}>
             <button onClick={() => onAuth("signup")} className="magnetic-btn group inline-flex items-center gap-2 rounded-full bg-[var(--cobalt)] px-6 py-3.5 text-sm font-medium text-white">
@@ -207,7 +207,7 @@ function Features() {
   const items = [
     { icon: Brain, title: "AI Investment Insights", desc: "Models trained on a decade of on-chain and macro data surface theses you can actually act on." },
     { icon: LineChart, title: "Portfolio Analytics", desc: "Beautiful, real-time dashboards across exchanges, wallets, and DeFi positions." },
-    { icon: Bell, title: "Smart Alerts", desc: "Context-aware notifications — only what matters, never the noise." },
+    { icon: Bell, title: "Smart Alerts", desc: "Context-aware notifications - only what matters, never the noise." },
     { icon: ShieldCheck, title: "Blockchain Security", desc: "Multi-sig, MPC custody, and continuous wallet hygiene scoring." },
     { icon: BarChart3, title: "Market Intelligence", desc: "Sentiment, flows, derivatives, and liquidity in a single coherent view." },
     { icon: FileText, title: "Automated Reports", desc: "Investor-grade PDFs and tax-ready summaries generated on schedule." },
@@ -223,7 +223,7 @@ function Features() {
             </h2>
           </div>
           <p className="max-w-md text-base leading-relaxed text-subtle reveal">
-            Every workflow a serious investor needs — research, execution, risk, reporting — unified under one calm, deliberate interface.
+            Every workflow a serious investor needs - research, execution, risk, reporting - unified under one calm, deliberate interface.
           </p>
         </div>
         <div className="mt-16 grid grid-cols-1 gap-px overflow-hidden rounded-3xl bg-[var(--hairline)] ring-hairline md:grid-cols-2 lg:grid-cols-3">
@@ -263,7 +263,7 @@ function StackedCards() {
     { tag: "Research", title: "Theses, written by AI analysts.", body: "Lumen Research distills hundreds of sources daily into bull, base, and bear cases with cited evidence.", accent: "BTC dominance · macro · ETF flows" },
     { tag: "Execution", title: "Rebalance with one decision.", body: "Apply target allocations across venues with smart routing and slippage caps you control.", accent: "Smart routing · 12 venues" },
     { tag: "Risk", title: "See the trade before you take it.", body: "Pre-trade scenarios, correlation maps, and drawdown projections rendered in real time.", accent: "VaR · stress · correlation" },
-    { tag: "Reporting", title: "Compliance, quietly handled.", body: "Audit-ready statements, performance attribution, and tax lots — generated on your schedule.", accent: "PDF · CSV · API" },
+    { tag: "Reporting", title: "Compliance, quietly handled.", body: "Audit-ready statements, performance attribution, and tax lots - generated on your schedule.", accent: "PDF · CSV · API" },
   ];
   const n = cards.length;
   return (

@@ -103,7 +103,7 @@ export function AuthModal({
             <span className="h-3 w-3 rounded-full bg-[#28c840] ring-1 ring-black/5" />
           </div>
           <div className="pointer-events-none absolute inset-x-0 text-center text-[11px] font-medium text-subtle">
-            lumen.app — {mode === "signin" ? "Sign in" : "Create account"}
+            lumen.app - {mode === "signin" ? "Sign in" : "Create account"}
           </div>
           <button
             onClick={onClose}
@@ -151,7 +151,7 @@ export function AuthModal({
   );
 }
 
-/* ---------- Sign In Form (email only — auth only, no CRM) ---------- */
+/* ---------- Sign In Form (email only - auth only, no CRM) ---------- */
 function SigninForm({ onSuccess }: { onSuccess: () => void }) {
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const { register, handleSubmit, formState: { errors } } = useForm<SigninData>({
@@ -160,7 +160,7 @@ function SigninForm({ onSuccess }: { onSuccess: () => void }) {
 
   const onSubmit = async (_data: SigninData) => {
     setStatus("loading");
-    // Simulate auth check — replace with real Vercel/Blob auth
+    // Simulate auth check - replace with real Vercel/Blob auth
     await new Promise((r) => setTimeout(r, 800));
     setStatus("idle");
     onSuccess();
@@ -246,7 +246,7 @@ function SignupForm({ onSuccess }: { onSuccess: () => void }) {
         <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[var(--hover-accent)]">
           <CheckCircle className="h-6 w-6 text-[var(--cobalt)]" />
         </div>
-        <p className="mt-4 text-sm font-medium text-ink">Account created — taking you in…</p>
+        <p className="mt-4 text-sm font-medium text-ink">Account created - taking you in…</p>
       </div>
     );
   }

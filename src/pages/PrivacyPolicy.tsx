@@ -55,10 +55,10 @@ export default function PrivacyPolicy() {
           <section>
             <h2 className="font-display text-xl font-medium text-ink mb-3">2. Definitions</h2>
             <ul className="space-y-2 list-disc list-inside">
-              <li><strong className="text-ink">Personal Data</strong> — any information that relates to an identified or identifiable natural person.</li>
-              <li><strong className="text-ink">Processing</strong> — any operation performed on personal data, including collection, storage, use, disclosure, or deletion.</li>
-              <li><strong className="text-ink">Data Controller</strong> — Lumen Capital Technologies, Inc., which determines the purposes and means of processing personal data.</li>
-              <li><strong className="text-ink">CRM</strong> — Customer Relationship Management system used to manage and track leads and communications.</li>
+              <li><strong className="text-ink">Personal Data</strong> - any information that relates to an identified or identifiable natural person.</li>
+              <li><strong className="text-ink">Processing</strong> - any operation performed on personal data, including collection, storage, use, disclosure, or deletion.</li>
+              <li><strong className="text-ink">Data Controller</strong> - Lumen Capital Technologies, Inc., which determines the purposes and means of processing personal data.</li>
+              <li><strong className="text-ink">CRM</strong> - Customer Relationship Management system used to manage and track leads and communications.</li>
             </ul>
           </section>
 
@@ -94,10 +94,10 @@ export default function PrivacyPolicy() {
             <h2 className="font-display text-xl font-medium text-ink mb-3">5. Legal Basis for Processing</h2>
             <p className="mb-3">Where applicable under data protection law (including GDPR), we process your personal data on the following legal bases:</p>
             <ul className="space-y-1 list-disc list-inside">
-              <li><strong className="text-ink">Consent</strong> — where you have given clear consent for us to process your data for a specific purpose</li>
-              <li><strong className="text-ink">Contractual necessity</strong> — where processing is necessary to perform a contract with you</li>
-              <li><strong className="text-ink">Legitimate interests</strong> — where we have a legitimate business interest that is not overridden by your rights</li>
-              <li><strong className="text-ink">Legal obligation</strong> — where we are required to process data to comply with law</li>
+              <li><strong className="text-ink">Consent</strong> - where you have given clear consent for us to process your data for a specific purpose</li>
+              <li><strong className="text-ink">Contractual necessity</strong> - where processing is necessary to perform a contract with you</li>
+              <li><strong className="text-ink">Legitimate interests</strong> - where we have a legitimate business interest that is not overridden by your rights</li>
+              <li><strong className="text-ink">Legal obligation</strong> - where we are required to process data to comply with law</li>
             </ul>
           </section>
 
@@ -122,9 +122,9 @@ export default function PrivacyPolicy() {
             <h2 className="font-display text-xl font-medium text-ink mb-3">8. Cookies and Tracking Technologies</h2>
             <p className="mb-3">Our website uses cookies and similar technologies to improve user experience and analyse site usage. Types of cookies used:</p>
             <ul className="space-y-1 list-disc list-inside">
-              <li><strong className="text-ink">Essential cookies</strong> — required for the website to function</li>
-              <li><strong className="text-ink">Analytics cookies</strong> — help us understand how visitors interact with our site</li>
-              <li><strong className="text-ink">Preference cookies</strong> — remember your settings and preferences</li>
+              <li><strong className="text-ink">Essential cookies</strong> - required for the website to function</li>
+              <li><strong className="text-ink">Analytics cookies</strong> - help us understand how visitors interact with our site</li>
+              <li><strong className="text-ink">Preference cookies</strong> - remember your settings and preferences</li>
             </ul>
             <p className="mt-3">You can control or disable cookies through your browser settings. Please note that disabling essential cookies may affect site functionality.</p>
           </section>

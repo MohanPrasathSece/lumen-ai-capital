@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-// Animated candlestick chart — bars drift upward and a new candle prints periodically
+// Animated candlestick chart - bars drift upward and a new candle prints periodically
 export function CandleChart({ className = "" }: { className?: string }) {
   const ref = useRef<SVGSVGElement>(null);
 
