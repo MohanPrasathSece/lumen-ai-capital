@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowUpRight, ArrowRight, ShieldCheck, LineChart, Bell,
-  Brain, BarChart3, FileText, AlertCircle,
+  Brain, BarChart3, FileText,
 } from "lucide-react";
 import { HeroDashboard } from "@/components/hero-dashboard";
 import { MiniChart, Donut } from "@/components/charts";
