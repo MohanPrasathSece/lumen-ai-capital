@@ -17,5 +17,7 @@ export const COUNTRY_PHONE_PATTERNS: Record<string, { dial: string; pattern: Reg
   BR: { dial: "+55", pattern: /^(\+55|0055)?[1-9]{2}9\d{8}$/, example: "11 91234-5678", flag: "🇧🇷" },
   MX: { dial: "+52", pattern: /^(\+52|0052)?[1-9]\d{9}$/, example: "55 1234 5678", flag: "🇲🇽" },
   JP: { dial: "+81", pattern: /^(\+81|0081|0)?[7-9]0\d{8}$/, example: "090 1234 5678", flag: "🇯🇵" },
-  CY: { dial: "+357", pattern: /^(\+357|00357)?9[0-9]{7}$/, example: "99 123456", flag: "🇨🇾" }
+  CY: { dial: "+357", pattern: /^(\+357|00357)?9[0-9]{7}$/, example: "99 123456", flag: "🇨🇾" },
+   name: "Ireland", dial: "+353", flag: "🇮🇪", example: "087 123 4567", pattern: /^(\+353|00353|0)?[89]\d{7,8}$/ },
+  GBR: { name: "Great Britain", dial: "+44", flag: "🇬🇧", example: "07700 900077", pattern: /^(\+44|0044|0)?7\d{9}$/ },
 };
