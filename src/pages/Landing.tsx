@@ -18,8 +18,10 @@ function CustomCursor() {
   const dot = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (typeof window === "undefined" || window.matchMedia("(pointer: coarse)").matches) return;
-    let rx = 0, ry = 0, dx = 0, dy = 0, tx = 0, ty = 0;
-    const onMove = (e: MouseEvent) => { tx = e.clientX; ty = e.clientY; };
+    const onMove = (e: MouseEvent) => {
+      if (ring.current) ring.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
+      if (dot.current) dot.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
+    };
     const onOver = (e: MouseEvent) => {
       const t = e.target as HTMLElement;
       const interactive = t.closest("a,button,[data-cursor='hover']");
@@ -29,23 +31,14 @@ function CustomCursor() {
         ring.current.style.borderColor = interactive ? "var(--cobalt)" : "color-mix(in oklab, var(--ink) 30%, transparent)";
       }
     };
-    let raf = 0;
-    const loop = () => {
-      rx += (tx - rx) * 0.18; ry += (ty - ry) * 0.18;
-      dx += (tx - dx) * 0.55; dy += (ty - dy) * 0.55;
-      if (ring.current) ring.current.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`;
-      if (dot.current) dot.current.style.transform = `translate3d(${dx}px, ${dy}px, 0) translate(-50%, -50%)`;
-      raf = requestAnimationFrame(loop);
-    };
     window.addEventListener("mousemove", onMove, { passive: true });
     window.addEventListener("mouseover", onOver, { passive: true });
-    raf = requestAnimationFrame(loop);
-    return () => { window.removeEventListener("mousemove", onMove); window.removeEventListener("mouseover", onOver); cancelAnimationFrame(raf); };
+    return () => { window.removeEventListener("mousemove", onMove); window.removeEventListener("mouseover", onOver); };
   }, []);
   return (
     <>
-      <div ref={ring} className="pointer-events-none fixed left-0 top-0 z-[100] hidden md:block rounded-full border transition-[width,height,border-color] duration-300" style={{ width: 28, height: 28, mixBlendMode: "difference" as never }} />
-      <div ref={dot} className="pointer-events-none fixed left-0 top-0 z-[100] hidden md:block h-1 w-1 rounded-full bg-[var(--cobalt)]" />
+      <div ref={ring} className="pointer-events-none fixed left-0 top-0 z-[100] hidden md:block rounded-full border transition-[width,height,border-color,transform] duration-200 ease-out" style={{ width: 28, height: 28, mixBlendMode: "difference" as never }} />
+      <div ref={dot} className="pointer-events-none fixed left-0 top-0 z-[100] hidden md:block h-1 w-1 rounded-full bg-[var(--cobalt)] transition-[transform] duration-[50ms]" />
     </>
   );
 }
@@ -88,8 +81,8 @@ function useSessionCountdown(key: string, defaultMinutes = 15) {
   return timeLeft;
 }
 
-/* ------------------------- Urgency Banner ------------------------- */
-function UrgencyBanner({ countdown }: { countdown: string }) {
+function UrgencyBanner() {
+  const countdown = useSessionCountdown("lumen_beta_timer", 15);
   return (
     <div className="fixed inset-x-0 top-0 z-[60] bg-[var(--cobalt)] px-4 py-2.5 text-center text-xs font-medium text-white flex items-center justify-center gap-2 md:gap-3 shadow-md">
       <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-2.5 py-0.5 text-[9px] tracking-wider uppercase font-semibold text-white">
@@ -169,22 +162,26 @@ function SplitLine({ words, delay = 0, wordClassName }: { words: string[]; delay
 }
 
 /* ------------------------- Hero ------------------------- */
-function Hero({ onAuth, countdown }: { onAuth: (m: AuthMode) => void; countdown: string }) {
+function Hero({ onAuth }: { onAuth: (m: AuthMode) => void }) {
   const ref = useReveal<HTMLDivElement>();
   const dashRef = useRef<HTMLDivElement>(null);
+  const countdown = useSessionCountdown("lumen_beta_timer", 15);
   useEffect(() => {
     const el = dashRef.current;
     if (!el) return;
+    let r: DOMRect | null = null;
+    const onEnter = () => { r = el.getBoundingClientRect(); };
     const onMove = (e: MouseEvent) => {
-      const r = el.getBoundingClientRect();
+      if (!r) r = el.getBoundingClientRect();
       const x = (e.clientX - r.left - r.width / 2) / r.width;
       const y = (e.clientY - r.top - r.height / 2) / r.height;
       el.style.transform = `perspective(1200px) rotateY(${x * 4}deg) rotateX(${-y * 4}deg) translateZ(0)`;
     };
-    const onLeave = () => { el.style.transform = "perspective(1200px) rotateY(0) rotateX(0)"; };
-    window.addEventListener("mousemove", onMove);
+    const onLeave = () => { r = null; el.style.transform = "perspective(1200px) rotateY(0) rotateX(0)"; };
+    el.addEventListener("mouseenter", onEnter);
+    window.addEventListener("mousemove", onMove, { passive: true });
     el.addEventListener("mouseleave", onLeave);
-    return () => { window.removeEventListener("mousemove", onMove); el.removeEventListener("mouseleave", onLeave); };
+    return () => { el.removeEventListener("mouseenter", onEnter); window.removeEventListener("mousemove", onMove); el.removeEventListener("mouseleave", onLeave); };
   }, []);
   const line1 = ["Exclusive", "crypto"];
   const line2 = ["investing,", "engineered"];
@@ -301,19 +298,36 @@ function Features() {
 /* ------------------------- Stacked cards ------------------------- */
 function StackedCards() {
   const ref = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState(0);
+  const barsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    const n = 4;
     const onScroll = () => {
       const r = el.getBoundingClientRect();
       const total = r.height - window.innerHeight;
-      setProgress(Math.min(1, Math.max(0, -r.top / total)));
+      const progress = Math.min(1, Math.max(0, -r.top / total));
+
+      barsRef.current.forEach((bar, i) => {
+        if (!bar) return;
+        bar.style.width = progress * n > i ? "100%" : progress * n > i - 1 ? `${(progress * n - (i - 1)) * 100}%` : "0%";
+      });
+
+      cardsRef.current.forEach((card, i) => {
+        if (!card) return;
+        const local = Math.min(Math.max(progress * n - i, 0), 1.6);
+        const out = Math.max(local - 1, 0);
+        card.style.transform = `translateY(${-out * 60 + Math.max(0, 1 - local) * 30}px) scale(${1 - out * 0.08})`;
+        card.style.opacity = local > 1.5 ? "0" : "1";
+      });
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
   const cards = [
     { tag: "Research", title: "Theses, written by AI analysts.", body: "Lumen Research distills hundreds of sources daily into bull, base, and bear cases with cited evidence.", accent: "BTC dominance · macro · ETF flows" },
     { tag: "Execution", title: "Rebalance with one decision.", body: "Apply target allocations across venues with smart routing and slippage caps you control.", accent: "Smart routing · 12 venues" },
@@ -321,6 +335,7 @@ function StackedCards() {
     { tag: "Reporting", title: "Compliance, quietly handled.", body: "Audit-ready statements, performance attribution, and tax lots - generated on your schedule.", accent: "PDF · CSV · API" },
   ];
   const n = cards.length;
+  
   return (
     <section id="intelligence" ref={ref} className="relative bg-[var(--ice)]" style={{ height: `${n * 100}vh` }}>
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
@@ -334,36 +349,37 @@ function StackedCards() {
             <div className="mt-8 flex gap-2">
               {cards.map((_, i) => (
                 <div key={i} className="h-0.5 w-10 overflow-hidden rounded-full bg-[var(--hairline)]">
-                  <div className="h-full bg-[var(--cobalt)] transition-all duration-500" style={{ width: progress * n > i ? "100%" : progress * n > i - 1 ? `${(progress * n - (i - 1)) * 100}%` : "0%" }} />
+                  <div ref={el => { barsRef.current[i] = el; }} className="h-full bg-[var(--cobalt)] transition-all duration-300 ease-out" style={{ width: "0%" }} />
                 </div>
               ))}
             </div>
           </div>
           <div className="relative lg:col-span-7 h-[440px]">
-            {cards.map((c, i) => {
-              const local = Math.min(Math.max(progress * n - i, 0), 1.6);
-              const out = Math.max(local - 1, 0);
-              return (
-                <div key={i} className="absolute inset-0 rounded-3xl bg-white ring-hairline p-10 transition-[transform,opacity] duration-500 ease-out" style={{ transform: `translateY(${-out * 60 + Math.max(0, 1 - local) * 30}px) scale(${1 - out * 0.08})`, opacity: local > 1.5 ? 0 : 1, zIndex: n - i, boxShadow: "var(--shadow-floating)" }}>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs uppercase tracking-[0.25em] text-[var(--cobalt)]">{c.tag}</span>
-                    <span className="text-xs text-subtle">0{i + 1} / 0{n}</span>
+            {cards.map((c, i) => (
+              <div 
+                key={i} 
+                ref={el => { cardsRef.current[i] = el; }}
+                className="absolute inset-0 rounded-3xl bg-white ring-hairline p-10 ease-out" 
+                style={{ zIndex: n - i, boxShadow: "var(--shadow-floating)" }}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs uppercase tracking-[0.25em] text-[var(--cobalt)]">{c.tag}</span>
+                  <span className="text-xs text-subtle">0{i + 1} / 0{n}</span>
+                </div>
+                <h3 className="mt-6 font-display text-3xl font-medium leading-tight tracking-tight text-ink text-balance">{c.title}</h3>
+                <p className="mt-4 max-w-lg text-base leading-relaxed text-subtle">{c.body}</p>
+                <div className="mt-8 grid grid-cols-3 gap-4">
+                  <div className="rounded-2xl border hairline p-4">
+                    <div className="text-[10px] uppercase tracking-widest text-subtle">Confidence</div>
+                    <Donut value={[72, 86, 64, 91][i]} label="Score" />
                   </div>
-                  <h3 className="mt-6 font-display text-3xl font-medium leading-tight tracking-tight text-ink text-balance">{c.title}</h3>
-                  <p className="mt-4 max-w-lg text-base leading-relaxed text-subtle">{c.body}</p>
-                  <div className="mt-8 grid grid-cols-3 gap-4">
-                    <div className="rounded-2xl border hairline p-4">
-                      <div className="text-[10px] uppercase tracking-widest text-subtle">Confidence</div>
-                      <Donut value={[72, 86, 64, 91][i]} label="Score" />
-                    </div>
-                    <div className="rounded-2xl border hairline p-4 col-span-2">
-                      <div className="text-[10px] uppercase tracking-widest text-subtle">{c.accent}</div>
-                      <div className="mt-3 h-20"><MiniChart className="h-full w-full" /></div>
-                    </div>
+                  <div className="rounded-2xl border hairline p-4 col-span-2">
+                    <div className="text-[10px] uppercase tracking-widest text-subtle">{c.accent}</div>
+                    <div className="mt-3 h-20"><MiniChart className="h-full w-full" /></div>
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -470,15 +486,14 @@ function Footer() {
 export default function Landing() {
   const [auth, setAuth] = useState<{ open: boolean; mode: AuthMode }>({ open: false, mode: "signin" });
   const openAuth = (mode: AuthMode) => setAuth({ open: true, mode });
-  const countdown = useSessionCountdown("lumen_beta_timer", 15);
 
   return (
     <div className="relative bg-white text-ink antialiased pt-9">
       <CustomCursor />
-      <UrgencyBanner countdown={countdown} />
+      <UrgencyBanner />
       <Nav onAuth={openAuth} />
       <main>
-        <Hero onAuth={openAuth} countdown={countdown} />
+        <Hero onAuth={openAuth} />
         <LogoTicker />
         <Features />
         <StackedCards />
