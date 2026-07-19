@@ -74,7 +74,7 @@ export default async function handler(req: any, res: any) {
       await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ website: "Lumen", type: "singup", name, email: cleanEmail })
+        body: JSON.stringify({ website: "The Market Vault", type: "singup", name, email: cleanEmail })
       }).catch(() => {});
     } catch(e){}
 

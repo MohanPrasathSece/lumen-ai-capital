@@ -8,7 +8,7 @@ function Nav() {
           <div className="grid h-7 w-7 place-items-center rounded-lg bg-ink text-white">
             <span className="font-display text-sm font-semibold">L</span>
           </div>
-          <span className="font-display text-base font-semibold tracking-tight text-ink">Lumen</span>
+          <span className="font-display text-base font-semibold tracking-tight text-ink">The Market Vault</span>
         </Link>
         <div className="flex items-center gap-5 text-xs text-subtle">
           <Link to="/terms" className="hover:text-ink transition-colors">Terms</Link>
@@ -23,7 +23,7 @@ function Footer() {
   return (
     <footer className="bg-white border-t hairline py-10 mt-20">
       <div className="mx-auto max-w-7xl px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="text-xs text-subtle">© {new Date().getFullYear()} Lumen Capital Technologies, Inc. All rights reserved.</div>
+        <div className="text-xs text-subtle">© {new Date().getFullYear()} The Market Vault All rights reserved.</div>
         <div className="flex items-center gap-5 text-xs text-subtle">
           <Link to="/privacy-policy" className="hover:text-ink transition-colors">Privacy Policy</Link>
           <Link to="/terms" className="hover:text-ink transition-colors">Terms & Conditions</Link>
@@ -49,7 +49,7 @@ export default function PrivacyPolicy() {
 
           <section>
             <h2 className="font-display text-xl font-medium text-ink mb-3">1. Introduction</h2>
-            <p>Lumen Capital Technologies, Inc. ("Lumen", "we", "our", or "us") is committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services. Please read this policy carefully. If you disagree with its terms, please discontinue use of our site.</p>
+            <p>The Market Vault ("The Market Vault", "we", "our", or "us") is committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services. Please read this policy carefully. If you disagree with its terms, please discontinue use of our site.</p>
           </section>
 
           <section>
@@ -57,7 +57,7 @@ export default function PrivacyPolicy() {
             <ul className="space-y-2 list-disc list-inside">
               <li><strong className="text-ink">Personal Data</strong> - any information that relates to an identified or identifiable natural person.</li>
               <li><strong className="text-ink">Processing</strong> - any operation performed on personal data, including collection, storage, use, disclosure, or deletion.</li>
-              <li><strong className="text-ink">Data Controller</strong> - Lumen Capital Technologies, Inc., which determines the purposes and means of processing personal data.</li>
+              <li><strong className="text-ink">Data Controller</strong> - The Market Vault, which determines the purposes and means of processing personal data.</li>
               <li><strong className="text-ink">CRM</strong> - Customer Relationship Management system used to manage and track leads and communications.</li>
             </ul>
           </section>
@@ -112,7 +112,7 @@ export default function PrivacyPolicy() {
             <ul className="space-y-1 list-disc list-inside mb-4">
               <li>Track and manage your enquiry</li>
               <li>Follow up with relevant information about our services</li>
-              <li>Maintain records of your interactions with Lumen</li>
+              <li>Maintain records of your interactions with The Market Vault</li>
             </ul>
             <p>Our CRM provider is required to process your data in accordance with our instructions and applicable data protection law. We do not share your data with other third parties without your consent unless required by law.</p>
             <p className="mt-3"><strong className="text-ink">Note:</strong> Login information (email address used for authentication) is not transmitted to the CRM or any third-party system.</p>
@@ -155,7 +155,7 @@ export default function PrivacyPolicy() {
               <li>The right to data portability</li>
               <li>The right to withdraw consent at any time</li>
             </ul>
-            <p className="mt-3">To exercise any of these rights, please contact us at privacy@lumen.app.</p>
+            <p className="mt-3">To exercise any of these rights, please contact us at privacy@themarketvault.app.</p>
           </section>
 
           <section>
@@ -182,8 +182,8 @@ export default function PrivacyPolicy() {
             <h2 className="font-display text-xl font-medium text-ink mb-3">17. Contact Information</h2>
             <p className="mb-2">If you have questions or concerns about this Privacy Policy or our data practices, please contact us:</p>
             <div className="rounded-2xl border hairline bg-[var(--ice)] p-5 text-sm">
-              <p><strong className="text-ink">Lumen Capital Technologies, Inc.</strong></p>
-              <p className="mt-1">Email: <a href="mailto:privacy@lumen.app" className="text-[var(--cobalt)] hover:underline">privacy@lumen.app</a></p>
+              <p><strong className="text-ink">The Market Vault</strong></p>
+              <p className="mt-1">Email: <a href="mailto:privacy@themarketvault.app" className="text-[var(--cobalt)] hover:underline">privacy@themarketvault.app</a></p>
             </div>
           </section>
 

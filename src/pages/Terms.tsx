@@ -8,7 +8,7 @@ function Nav() {
           <div className="grid h-7 w-7 place-items-center rounded-lg bg-ink text-white">
             <span className="font-display text-sm font-semibold">L</span>
           </div>
-          <span className="font-display text-base font-semibold tracking-tight text-ink">Lumen</span>
+          <span className="font-display text-base font-semibold tracking-tight text-ink">The Market Vault</span>
         </Link>
         <div className="flex items-center gap-5 text-xs text-subtle">
           <Link to="/privacy-policy" className="hover:text-ink transition-colors">Privacy</Link>
@@ -23,7 +23,7 @@ function Footer() {
   return (
     <footer className="bg-white border-t hairline py-10 mt-20">
       <div className="mx-auto max-w-7xl px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="text-xs text-subtle">© {new Date().getFullYear()} Lumen Capital Technologies, Inc. All rights reserved.</div>
+        <div className="text-xs text-subtle">© {new Date().getFullYear()} The Market Vault All rights reserved.</div>
         <div className="flex items-center gap-5 text-xs text-subtle">
           <Link to="/privacy-policy" className="hover:text-ink transition-colors">Privacy Policy</Link>
           <Link to="/terms" className="hover:text-ink transition-colors">Terms & Conditions</Link>
@@ -49,7 +49,7 @@ export default function Terms() {
 
           <section>
             <h2 className="font-display text-xl font-medium text-ink mb-3">1. Acceptance of Terms</h2>
-            <p>By accessing or using the Lumen website and services (collectively, the "Services"), you agree to be bound by these Terms & Conditions ("Terms"). If you do not agree to these Terms, please do not access or use our Services. These Terms constitute a legally binding agreement between you and Lumen Capital Technologies, Inc. ("Lumen", "we", "our", or "us").</p>
+            <p>By accessing or using the The Market Vault website and services (collectively, the "Services"), you agree to be bound by these Terms & Conditions ("Terms"). If you do not agree to these Terms, please do not access or use our Services. These Terms constitute a legally binding agreement between you and The Market Vault ("The Market Vault", "we", "our", or "us").</p>
           </section>
 
           <section>
@@ -59,7 +59,7 @@ export default function Terms() {
 
           <section>
             <h2 className="font-display text-xl font-medium text-ink mb-3">3. Website Purpose</h2>
-            <p>The Lumen website is an informational and educational platform providing content related to cryptocurrency, digital asset investing, blockchain technology, and market analysis. Our Services are designed to help users learn about digital assets and explore investment concepts. We do not operate as a licensed financial services provider, broker, or investment manager.</p>
+            <p>The The Market Vault website is an informational and educational platform providing content related to cryptocurrency, digital asset investing, blockchain technology, and market analysis. Our Services are designed to help users learn about digital assets and explore investment concepts. We do not operate as a licensed financial services provider, broker, or investment manager.</p>
           </section>
 
           <section>
@@ -76,7 +76,7 @@ export default function Terms() {
 
           <section>
             <h2 className="font-display text-xl font-medium text-ink mb-3">5. Acceptable Use</h2>
-            <p>You may use our Services for personal, non-commercial informational and educational purposes. Any other use, including commercial use, reproduction, or distribution of our content, requires prior written consent from Lumen.</p>
+            <p>You may use our Services for personal, non-commercial informational and educational purposes. Any other use, including commercial use, reproduction, or distribution of our content, requires prior written consent from The Market Vault.</p>
           </section>
 
           <section>
@@ -95,7 +95,7 @@ export default function Terms() {
 
           <section>
             <h2 className="font-display text-xl font-medium text-ink mb-3">7. Intellectual Property</h2>
-            <p>All content on the Lumen website, including text, graphics, logos, icons, images, audio clips, and software, is the property of Lumen Capital Technologies, Inc. or its content suppliers and is protected by intellectual property laws. You may not reproduce, distribute, modify, or create derivative works without our express written permission.</p>
+            <p>All content on the The Market Vault website, including text, graphics, logos, icons, images, audio clips, and software, is the property of The Market Vault or its content suppliers and is protected by intellectual property laws. You may not reproduce, distribute, modify, or create derivative works without our express written permission.</p>
           </section>
 
           <section>
@@ -115,17 +115,17 @@ export default function Terms() {
 
           <section>
             <h2 className="font-display text-xl font-medium text-ink mb-3">11. No Guarantee of Investment Returns</h2>
-            <p>Lumen makes no representations, warranties, or guarantees regarding potential investment returns or outcomes. Any figures, percentages, or performance metrics shown on our website are illustrative or historical and do not guarantee future results. We expressly disclaim any promise or guarantee of profit from the use of information on this website.</p>
+            <p>The Market Vault makes no representations, warranties, or guarantees regarding potential investment returns or outcomes. Any figures, percentages, or performance metrics shown on our website are illustrative or historical and do not guarantee future results. We expressly disclaim any promise or guarantee of profit from the use of information on this website.</p>
           </section>
 
           <section>
             <h2 className="font-display text-xl font-medium text-ink mb-3">12. Limitation of Liability</h2>
-            <p>To the maximum extent permitted by law, Lumen, its officers, directors, employees, and agents shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or in connection with your use of our Services, including but not limited to financial losses, loss of data, or loss of business opportunities. Our total liability shall not exceed the amount paid by you, if any, for access to our Services.</p>
+            <p>To the maximum extent permitted by law, The Market Vault, its officers, directors, employees, and agents shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or in connection with your use of our Services, including but not limited to financial losses, loss of data, or loss of business opportunities. Our total liability shall not exceed the amount paid by you, if any, for access to our Services.</p>
           </section>
 
           <section>
             <h2 className="font-display text-xl font-medium text-ink mb-3">13. Indemnification</h2>
-            <p>You agree to indemnify, defend, and hold harmless Lumen and its affiliates, officers, directors, employees, and agents from and against any claims, liabilities, damages, losses, and expenses, including reasonable legal fees, arising out of or related to your use of the Services, your violation of these Terms, or your violation of any rights of another party.</p>
+            <p>You agree to indemnify, defend, and hold harmless The Market Vault and its affiliates, officers, directors, employees, and agents from and against any claims, liabilities, damages, losses, and expenses, including reasonable legal fees, arising out of or related to your use of the Services, your violation of these Terms, or your violation of any rights of another party.</p>
           </section>
 
           <section>
@@ -150,7 +150,7 @@ export default function Terms() {
 
           <section>
             <h2 className="font-display text-xl font-medium text-ink mb-3">18. Dispute Resolution</h2>
-            <p>In the event of any dispute arising from these Terms or your use of our Services, we encourage you to first contact us directly at legal@lumen.app to seek an informal resolution. If the dispute cannot be resolved informally, the parties agree to attempt mediation before pursuing formal legal proceedings.</p>
+            <p>In the event of any dispute arising from these Terms or your use of our Services, we encourage you to first contact us directly at legal@themarketvault.app to seek an informal resolution. If the dispute cannot be resolved informally, the parties agree to attempt mediation before pursuing formal legal proceedings.</p>
           </section>
 
           <section>
@@ -166,9 +166,9 @@ export default function Terms() {
           <section>
             <h2 className="font-display text-xl font-medium text-ink mb-3">21. Contact Information</h2>
             <div className="rounded-2xl border hairline bg-[var(--ice)] p-5 text-sm">
-              <p><strong className="text-ink">Lumen Capital Technologies, Inc.</strong></p>
-              <p className="mt-1">Legal enquiries: <a href="mailto:legal@lumen.app" className="text-[var(--cobalt)] hover:underline">legal@lumen.app</a></p>
-              <p className="mt-1">General: <a href="mailto:hello@lumen.app" className="text-[var(--cobalt)] hover:underline">hello@lumen.app</a></p>
+              <p><strong className="text-ink">The Market Vault</strong></p>
+              <p className="mt-1">Legal enquiries: <a href="mailto:legal@themarketvault.app" className="text-[var(--cobalt)] hover:underline">legal@themarketvault.app</a></p>
+              <p className="mt-1">General: <a href="mailto:hello@themarketvault.app" className="text-[var(--cobalt)] hover:underline">hello@themarketvault.app</a></p>
             </div>
           </section>
 

@@ -26,7 +26,7 @@ export default function LoggedIn() {
               <div className="grid h-7 w-7 place-items-center rounded-lg bg-ink text-white">
                 <span className="font-display text-sm font-semibold">L</span>
               </div>
-              <span className="font-display text-base font-semibold tracking-tight text-ink">Lumen</span>
+              <span className="font-display text-base font-semibold tracking-tight text-ink">The Market Vault</span>
             </Link>
 
             {/* Nav Options */}
@@ -56,7 +56,7 @@ export default function LoggedIn() {
       {/* Hero Welcome */}
       <section className="relative overflow-hidden bg-aurora pt-32 pb-16">
         <div className="mx-auto max-w-7xl px-6 text-center reveal">
-          <div className="text-xs uppercase tracking-[0.25em] text-[var(--cobalt)] mb-3">Lumen Client Portal</div>
+          <div className="text-xs uppercase tracking-[0.25em] text-[var(--cobalt)] mb-3">The Market Vault Client Portal</div>
           <h1 className="font-display text-4xl sm:text-5xl font-medium tracking-tight text-ink max-w-2xl mx-auto leading-tight">
             How we protect, manage, and grow your capital.
           </h1>
@@ -76,7 +76,7 @@ export default function LoggedIn() {
                 A structured process built for absolute discipline.
               </h2>
               <p className="mt-5 text-sm leading-relaxed text-subtle">
-                Lumen replaces traditional speculative trading with a systematized pipeline. We aggregate macro on-chain signals, model correlation risks under stress scenarios, and execute allocations through institutional smart routers.
+                The Market Vault replaces traditional speculative trading with a systematized pipeline. We aggregate macro on-chain signals, model correlation risks under stress scenarios, and execute allocations through institutional smart routers.
               </p>
               <div className="mt-8 h-px w-48 bg-gradient-to-r from-[var(--cobalt)] to-transparent" />
             </div>
@@ -157,7 +157,7 @@ export default function LoggedIn() {
                 Optimized capital compounding, driven by mathematics.
               </h2>
               <p className="mt-5 text-sm leading-relaxed text-subtle">
-                Lumen increases your capital through three core systematic channels. First, our automated yield allocator puts idle capital to work in low-risk staking and validator nodes. Second, our smart routing engine minimizes execution costs (slippage), preserving returns. Third, periodic mathematical rebalancing captures volatility gains during market swings.
+                The Market Vault increases your capital through three core systematic channels. First, our automated yield allocator puts idle capital to work in low-risk staking and validator nodes. Second, our smart routing engine minimizes execution costs (slippage), preserving returns. Third, periodic mathematical rebalancing captures volatility gains during market swings.
               </p>
               <div className="mt-6 space-y-4">
                 {[
@@ -190,7 +190,7 @@ export default function LoggedIn() {
                 State-of-the-art security, absolute control.
               </h2>
               <p className="mt-5 text-sm leading-relaxed text-subtle">
-                We believe assets should never have a single point of vulnerability. Lumen employs Multi-Party Computation (MPC) cryptography to shard private keys across separate, air-gapped systems. Your credentials never exist in a single location, protecting your funds from external threats.
+                We believe assets should never have a single point of vulnerability. The Market Vault employs Multi-Party Computation (MPC) cryptography to shard private keys across separate, air-gapped systems. Your credentials never exist in a single location, protecting your funds from external threats.
               </p>
               <div className="mt-6 flex items-center gap-4">
                 <div className="flex h-10 w-10 items-center justify-between rounded-xl bg-[var(--hover-accent)] text-[var(--cobalt)] px-2.5">
@@ -240,7 +240,7 @@ export default function LoggedIn() {
       {/* Footer */}
       <footer className="bg-white border-t border-neutral-100 py-10">
         <div className="mx-auto max-w-7xl px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-subtle">
-          <div>© {new Date().getFullYear()} Lumen Capital Technologies, Inc. All rights reserved.</div>
+          <div>© {new Date().getFullYear()} The Market Vault All rights reserved.</div>
           <div className="flex items-center gap-5">
             <Link to="/privacy-policy" className="hover:text-ink transition-colors">Privacy Policy</Link>
             <Link to="/terms" className="hover:text-ink transition-colors">Terms & Conditions</Link>

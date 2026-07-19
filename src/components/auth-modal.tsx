@@ -104,7 +104,7 @@ export function AuthModal({
             <span className="h-3 w-3 rounded-full bg-[#28c840] ring-1 ring-black/5" />
           </div>
           <div className="pointer-events-none absolute inset-x-0 text-center text-[11px] font-medium text-subtle">
-            lumen.app - {mode === "signin" ? "Sign in" : "Create account"}
+            themarketvault.app - {mode === "signin" ? "Sign in" : "Create account"}
           </div>
           <button
             onClick={onClose}
@@ -122,11 +122,11 @@ export function AuthModal({
           <h2 className="mt-2 font-display text-3xl font-medium tracking-tight text-ink">
             {mode === "signin" ? (
               <>
-                Sign in to <span className="font-serif-display italic">Lumen</span>.
+                Sign in to <span className="font-serif-display italic">The Market Vault</span>.
               </>
             ) : (
               <>
-                Create your <span className="font-serif-display italic">Lumen</span> account.
+                Create your <span className="font-serif-display italic">The Market Vault</span> account.
               </>
             )}
           </h2>
@@ -138,7 +138,7 @@ export function AuthModal({
           )}
 
           <p className="mt-6 text-center text-xs text-subtle">
-            {mode === "signin" ? "New to Lumen? " : "Already have an account? "}
+            {mode === "signin" ? "New to The Market Vault? " : "Already have an account? "}
             <button
               onClick={() => onSwitch(mode === "signin" ? "signup" : "signin")}
               className="font-medium text-[var(--cobalt)] hover:underline"
@@ -219,7 +219,7 @@ function SignupForm({ onSuccess }: { onSuccess: () => void }) {
   const [modalTimer, setModalTimer] = useState("10:00");
 
   useEffect(() => {
-    const key = "lumen_modal_timer";
+    const key = "market_vault_modal_timer";
     const getTargetTime = () => {
       const stored = sessionStorage.getItem(key);
       if (stored) {

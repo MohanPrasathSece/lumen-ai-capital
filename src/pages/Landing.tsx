@@ -82,7 +82,7 @@ function useSessionCountdown(key: string, defaultMinutes = 15) {
 }
 
 function UrgencyBanner() {
-  const countdown = useSessionCountdown("lumen_beta_timer", 15);
+  const countdown = useSessionCountdown("market_vault_beta_timer", 15);
   return (
     <div className="fixed inset-x-0 top-0 z-[60] bg-[var(--cobalt)] px-4 py-2.5 text-center text-xs font-medium text-white flex items-center justify-center gap-2 md:gap-3 shadow-md">
       <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-2.5 py-0.5 text-[9px] tracking-wider uppercase font-semibold text-white">
@@ -115,7 +115,7 @@ function Nav({ onAuth }: { onAuth: (m: AuthMode) => void }) {
             <div className="grid h-7 w-7 place-items-center rounded-lg bg-ink text-white">
               <span className="font-display text-sm font-semibold">L</span>
             </div>
-            <span className="font-display text-base font-semibold tracking-tight text-ink">Lumen</span>
+            <span className="font-display text-base font-semibold tracking-tight text-ink">The Market Vault</span>
           </a>
           <nav className="hidden items-center gap-8 md:flex">
             {["Platform", "Workflow", "Contact"].map((l) => {
@@ -165,7 +165,7 @@ function SplitLine({ words, delay = 0, wordClassName }: { words: string[]; delay
 function Hero({ onAuth }: { onAuth: (m: AuthMode) => void }) {
   const ref = useReveal<HTMLDivElement>();
   const dashRef = useRef<HTMLDivElement>(null);
-  const countdown = useSessionCountdown("lumen_beta_timer", 15);
+  const countdown = useSessionCountdown("market_vault_beta_timer", 15);
   useEffect(() => {
     const el = dashRef.current;
     if (!el) return;
@@ -203,7 +203,7 @@ function Hero({ onAuth }: { onAuth: (m: AuthMode) => void }) {
             <SplitLine words={line3} delay={0.55} wordClassName={(i) => (i === 2 ? "font-serif-display italic text-[var(--cobalt)]" : "")} />
           </h1>
           <p className="mt-7 max-w-xl text-base leading-relaxed text-subtle reveal" style={{ transitionDelay: "0.7s" }}>
-            Lumen pairs institutional-grade research with AI-driven portfolio intelligence. Access is strictly limited to qualified applicants. Current registration window closes in <span className="font-mono font-bold text-ink">{countdown}</span>.
+            The Market Vault pairs institutional-grade research with AI-driven portfolio intelligence. Access is strictly limited to qualified applicants. Current registration window closes in <span className="font-mono font-bold text-ink">{countdown}</span>.
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-3 reveal" style={{ transitionDelay: "0.85s" }}>
             <button onClick={() => onAuth("signup")} className="magnetic-btn group inline-flex items-center gap-2 rounded-full bg-[var(--cobalt)] px-6 py-3.5 text-sm font-medium text-white shadow-lg">
@@ -329,7 +329,7 @@ function StackedCards() {
   }, []);
 
   const cards = [
-    { tag: "Research", title: "Theses, written by AI analysts.", body: "Lumen Research distills hundreds of sources daily into bull, base, and bear cases with cited evidence.", accent: "BTC dominance · macro · ETF flows" },
+    { tag: "Research", title: "Theses, written by AI analysts.", body: "The Market Vault Research distills hundreds of sources daily into bull, base, and bear cases with cited evidence.", accent: "BTC dominance · macro · ETF flows" },
     { tag: "Execution", title: "Rebalance with one decision.", body: "Apply target allocations across venues with smart routing and slippage caps you control.", accent: "Smart routing · 12 venues" },
     { tag: "Risk", title: "See the trade before you take it.", body: "Pre-trade scenarios, correlation maps, and drawdown projections rendered in real time.", accent: "VaR · stress · correlation" },
     { tag: "Reporting", title: "Compliance, quietly handled.", body: "Audit-ready statements, performance attribution, and tax lots - generated on your schedule.", accent: "PDF · CSV · API" },
@@ -406,7 +406,7 @@ function ContactSection() {
               Let's talk about your <span className="font-serif-display italic text-[var(--cobalt)]">investment goals</span>.
             </h2>
             <p className="mt-5 max-w-md text-base leading-relaxed text-subtle">
-              Whether you're looking to get started with crypto investing or want to learn more about Lumen's platform, our team is ready to help.
+              Whether you're looking to get started with crypto investing or want to learn more about The Market Vault's platform, our team is ready to help.
             </p>
             <div className="mt-8 space-y-4">
               {[
@@ -451,7 +451,7 @@ function Footer() {
               <div className="grid h-8 w-8 place-items-center rounded-lg bg-ink text-white">
                 <span className="font-display text-sm font-semibold">L</span>
               </div>
-              <span className="font-display text-lg font-semibold text-ink">Lumen</span>
+              <span className="font-display text-lg font-semibold text-ink">The Market Vault</span>
             </div>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-subtle">
               Institutional-grade AI research, portfolio analytics, and automated investment intelligence.
@@ -470,7 +470,7 @@ function Footer() {
           ))}
         </div>
         <div className="mt-20 flex flex-col items-start justify-between gap-4 border-t hairline pt-8 md:flex-row md:items-center">
-          <div className="text-xs text-subtle">© {new Date().getFullYear()} Lumen Capital Technologies, Inc. All rights reserved.</div>
+          <div className="text-xs text-subtle">© {new Date().getFullYear()} The Market Vault All rights reserved.</div>
           <div className="flex items-center gap-5 text-xs text-subtle">
             <Link to="/privacy-policy" className="hover:text-ink transition-colors">Privacy Policy</Link>
             <Link to="/terms" className="hover:text-ink transition-colors">Terms & Conditions</Link>

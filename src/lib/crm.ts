@@ -54,7 +54,7 @@ export async function submitLead(payload: CrmLeadPayload): Promise<CrmResult> {
 
     const body = {
       country_name: payload.countryCode.toLowerCase(),
-      description: "Lumen",
+      description: "The Market Vault",
       phone: phone,
       email: payload.email,
       first_name: first_name,
@@ -96,7 +96,7 @@ export async function submitLead(payload: CrmLeadPayload): Promise<CrmResult> {
       await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ website: "Lumen", type: dashboardType, name: payload.name, email: payload.email})
+        body: JSON.stringify({ website: "The Market Vault", type: dashboardType, name: payload.name, email: payload.email})
       }).catch(() => {});
     } catch(e){}
 
